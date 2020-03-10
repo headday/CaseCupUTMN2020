@@ -1,28 +1,17 @@
 <template>
 <f7-app :params="f7params" >
-
-  <!-- Left panel with cover effect-->
-  <f7-panel left cover theme-dark>
-    <f7-view>
-      <f7-page>
-        <f7-navbar title="Left Panel"></f7-navbar>
-        <f7-block>Left panel content goes here</f7-block>
-      </f7-page>
-    </f7-view>
-  </f7-panel>
-
-
-  <!-- Right panel with reveal effect-->
+   <!-- Right panel with reveal effect-->
   <f7-panel right reveal theme-dark>
     <f7-view>
       <f7-page>
-        <f7-navbar title="Right Panel"></f7-navbar>
-        <f7-block>Right panel content goes here</f7-block>
+        <f7-navbar title="EncouterMe"></f7-navbar>
+        <f7-block></f7-block>
       </f7-page>
     </f7-view>
   </f7-panel>
 
 
+<<<<<<< HEAD
   <!-- Views/Tabs container -->
   <f7-views tabs class="safe-areas">
     <!-- Tabbar for switching views-tabs -->
@@ -37,10 +26,13 @@
 
     <!-- Catalog View -->
     <f7-view id="view-catalog" name="catalog" tab url="/catalog/"></f7-view>
+=======
+  <!-- Your main view, should have "view-main" class -->
+  <f7-view main class="safe-areas" url="/"></f7-view>
+>>>>>>> upstream/master
 
-    <!-- Settings View -->
-    <f7-view id="view-settings" name="settings" tab url="/settings/"></f7-view>
 
+<<<<<<< HEAD
   </f7-views>
 
 
@@ -83,29 +75,57 @@
   </f7-login-screen>
 
   <f7-login-screen id="my-login-screen">
+=======
+  
+<f7-login-screen id="login-screen" theme-dark :opened="loginScreenOpened">
+>>>>>>> upstream/master
     <f7-view>
       <f7-page login-screen>
-        <f7-login-screen-title>Login</f7-login-screen-title>
+        <f7-login-screen-title>Вход</f7-login-screen-title>
         <f7-list form>
           <f7-list-input
             type="text"
-            name="username"
-            placeholder="Your username"
+            placeholder="Имя пользователя или почта"
             :value="username"
             @input="username = $event.target.value"
           ></f7-list-input>
           <f7-list-input
             type="password"
-            name="password"
-            placeholder="Your password"
+         placeholder="Пароль"
             :value="password"
             @input="password = $event.target.value"
           ></f7-list-input>
         </f7-list>
         <f7-list>
-          <f7-list-button title="Sign In" @click="alertLoginData"></f7-list-button>
+<f7-button fill @click="alertLoginData">Войти</f7-button>
           <f7-block-footer>
-            Some text about login information.<br>Click "Sign In" to close Login Screen
+          Еще не создали аккаунт?<br><f7-list-button @click="viewOpen('#register-screen')">Зарегистрироваться</f7-list-button>
+          </f7-block-footer>
+        </f7-list>
+      </f7-page>
+    </f7-view>
+  </f7-login-screen>
+  <f7-login-screen id="register-screen" theme-dark >
+    <f7-view>
+      <f7-page login-screen >
+        <f7-login-screen-title>Регистрация</f7-login-screen-title>
+        <f7-list form>
+          <f7-list-input
+            type="text"
+          placeholder="Имя пользователя или почта"
+            
+            @input="username = $event.target.value"
+          ></f7-list-input>
+          <f7-list-input
+            type="password"
+           placeholder="Пароль"
+            @input="password = $event.target.value"
+          ></f7-list-input>
+        </f7-list>
+        <f7-list>
+          <f7-button fill @click="alertRegisterData()">Зарегистрироваться</f7-button>
+          <f7-block-footer>
+            Уже есть аккаунт?<f7-list-button @click="viewOpen('#login-screen')">Войти</f7-list-button>
           </f7-block-footer>
         </f7-list>
       </f7-page>
@@ -122,52 +142,105 @@
       return {
         // Framework7 Parameters
         f7params: {
-          name: 'CaseCupUTMN2020', // App name
+          name: 'EncounterMe!', // App name
           theme: 'auto', // Automatic theme detection
-          // App root data
-          data: function () {
-            return {
 
-              // Demo products for Catalog section
-              products: [
-                {
-                  id: '1',
-                  title: 'Apple iPhone 8',
-                  description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-                },
-                {
-                  id: '2',
-                  title: 'Apple iPhone 8 Plus',
-                  description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-                },
-                {
-                  id: '3',
-                  title: 'Apple iPhone X',
-                  description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-                },
-              ]
-            };
-          },
 
           // App routes
           routes: routes,
         },
-
+        loginScreenOpened:true,
         // Login screen data
         username: '',
         password: '',
+        list_username: [],
+        list_password: [],
       }
     },
     methods: {
+      viewOpen(str){
+         this.$f7.loginScreen.close();
+        this.$f7.loginScreen.open(str);
+        
+      },
+     back(){
+       this.$f7.dialog.alert('Не верный пароль');
+         this.$f7.loginScreen.close();
+     },
       alertLoginData() {
-        this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password, () => {
-          this.$f7.loginScreen.close();
+        let error=true;
+      
+        if(this.username=='' ||  this.password==''){
+          //Тут будет код для вывода ошибки
+          this.$f7.dialog.alert("Одно из полей пустое");
+        }
+        if(this.username && this.password){
+          
+          if(this.list_username.length!=0){
+          for(let i=0;i<this.list_username.length;i++){
+            if(this.username==this.list_username[i]){
+              if(this.password==this.list_password[i]){
+                error=false;
+                this.$f7.dialog.alert('Вы успешно вошли', () => {
+                   this.$f7.loginScreen.close();
+                    });
+              }else{
+                 this.$f7.dialog.alert('Не верный пароль');
+              }
+            }
+          }
+          if(error){
+            this.$f7.dialog.alert('Не верный логин или пароль');
+          }
+          }else{
+           
+             this.$f7.dialog.alert('База данных пуста Зарегистрируйтесь', () => {
+              this.username='';
+              this.password='';
+              this.viewOpen('#register-screen');
+              
         });
+        }
+        }
+       
+      },
+      alertRegisterData() {
+        let error=false;
+        if(this.username=='' ||  this.password==''){
+          //Тут будет код для вывода ошибки
+          this.$f7.dialog.alert("Одно из полей пустое");
+        }
+      if(this.username && this.password){
+          if(this.list_username.length!=0){
+          for(let i=0;i<this.list_username.length;i++){
+            if(this.username==this.list_username[i]){
+              //Вывести о том что такой пользователь есть
+              error=true;
+              
+               this.$f7.dialog.alert('Пользователь с ником '+this.username+' уже есть');
+               break;
+            }
+          }
+          if(!error){
+            this.list_username.push(this.username);
+            this.list_password.push(this.password);
+               this.$f7.dialog.alert('Вы успешно зарегистрировались Ваши данные <br>Username: ' + this.username + '<br>Password: ' + this.password, () => {
+                this.$f7.loginScreen.close();
+                });
+          }
+          }else{
+            this.list_username.push(this.username);
+            this.list_password.push(this.password);
+             this.$f7.dialog.alert('Вы успешно зарегистрировались Ваши данные <br>Username: ' + this.username + '<br>Password: ' + this.password, () => {
+                this.$f7.loginScreen.close();
+                });
+        }
+        }
       }
     },
     mounted() {
       this.$f7ready((f7) => {
-
+        
         // Call F7 APIs here
       });
     }
