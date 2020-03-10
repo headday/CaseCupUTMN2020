@@ -26,11 +26,11 @@
   <!-- Views/Tabs container -->
   <f7-views tabs class="safe-areas">
     <!-- Tabbar for switching views-tabs -->
-    <f7-toolbar tabbar labels bottom>
+   <!--  <f7-toolbar tabbar labels bottom>
       <f7-link tab-link="#view-home" tab-link-active icon-ios="f7:house_fill" icon-aurora="f7:house_fill" icon-md="material:home" text="Home"></f7-link>
       <f7-link tab-link="#view-catalog" icon-ios="f7:square_list_fill" icon-aurora="f7:square_list_fill" icon-md="material:view_list" text="Catalog"></f7-link>
       <f7-link tab-link="#view-settings" icon-ios="f7:gear" icon-aurora="f7:gear" icon-md="material:settings" text="Settings"></f7-link>
-    </f7-toolbar>
+    </f7-toolbar> -->
 
     <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
     <f7-view id="view-home" main tab tab-active url="/"></f7-view>
@@ -45,20 +45,42 @@
 
 
   <!-- Popup -->
-  <f7-popup id="my-popup">
+  <f7-login-screen id="my-registration-screen">
     <f7-view>
-      <f7-page>
-        <f7-navbar title="Popup">
-          <f7-nav-right>
-            <f7-link popup-close>Close</f7-link>
-          </f7-nav-right>
-        </f7-navbar>
-        <f7-block>
-          <p>Popup content goes here.</p>
-        </f7-block>
+      <f7-page login-screen>
+        <f7-login-screen-title>Registaration</f7-login-screen-title>
+        <f7-list form>
+          <f7-list-input
+            type="text"
+            name="username"
+            placeholder="Your username"
+            :value="username"
+            @input="username = $event.target.value"
+          ></f7-list-input>
+          <f7-list-input
+            type="password"
+            name="password"
+            placeholder="Your password"
+            :value="password"
+            @input="password = $event.target.value"
+          ></f7-list-input>
+          <f7-list-input
+            type="number"
+            name="number"
+            placeholder="Your number"
+            :value="number"
+            @input="number = $event.target.value"
+          ></f7-list-input>
+        </f7-list>
+        <f7-list>
+          <f7-list-button title="Regisrtation " @click="alertLoginData"></f7-list-button>
+          <f7-block-footer>
+            Some text about login information.<br>Click "Sign In" to close Login Screen
+          </f7-block-footer>
+        </f7-list>
       </f7-page>
     </f7-view>
-  </f7-popup>
+  </f7-login-screen>
 
   <f7-login-screen id="my-login-screen">
     <f7-view>
